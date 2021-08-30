@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -14,13 +14,27 @@
 <p th:text="${user.getAge()}">VALUE</p>
 
 
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}">
-    <input type="submit" value="Edit"/>
-</a>
+<div class="row" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+<!--    <th:block -->
+            <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="Edit"/>
+            </a>
+<!--</div>-->
 <br/>
 <br/>
-<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
+<!--<div class="row" th:if="${#request.isUserInRole('ROLE_ADMIN')}">-->
+    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+<!--</div>-->
+<br/>
+<br/>
+<a href="/admin"><input type="submit" value="All users"/></a>
+<br/>
+<br/>
+</div>
+<form th:action="@{/logout}" method="post">
+    <input type="submit">Exit</input>
 </form>
 
 </body>
